@@ -12,7 +12,8 @@ $(document).ready(function(){
     $('.button').click(function(){
 
         var film = $('.ricerca input').val();
-        $('#ricerca-qui').val('');
+
+        reset(film);
 
         $.ajax(
             {
@@ -24,6 +25,12 @@ $(document).ready(function(){
                     query: film
                 },
                 success: function(risposta) {
+
+                    if (risposta.total_results == 0) {
+                        $('.container-risultati').html('Nessun risultato trovato con ' + film);
+                        return;
+                    }
+
                     for (var i = 0; i < risposta.results.length; i++) {
 
                         var source = $("#film-ricercati").html();
@@ -52,3 +59,11 @@ $(document).ready(function(){
         )
     })
 });
+
+//******FUNZIONI*******
+
+function reset(dati) {
+
+    $('#ricerca-qui').val('');
+    $('.container-risultati').empty('');
+}
