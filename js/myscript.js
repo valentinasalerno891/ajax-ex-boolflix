@@ -20,17 +20,22 @@ $(document).ready(function(){
     $('.button').click(function(){
         var film = $('.ricerca input').val();
         reset(film);
-        getFilms(film);
+        searchFilms(film);
+        searchSeries(film);
     });
 
     $('.ricerca input').keydown(function(){
         var film = $('.ricerca input').val();
         if (event.which == 13 || event.keyCode == 13) {
             reset(film);
-            getFilms(film);
+            searchFilms(film);
+            searchSeries(film);
         }
     });
 });
+
+
+
 
 //******FUNZIONI*******
 
@@ -39,7 +44,7 @@ function reset(dati) {
     $('.container-risultati').empty('');
 }
 
-function getFilms(data) {
+function searchFilms(data) {
 
     $.ajax(
         {
@@ -51,21 +56,10 @@ function getFilms(data) {
                 query: data
             },
             success: function(risposta) {
-
-                if (risposta.results == 0) {
-                    $('.container-risultati').html('Nessun risultato trovato con ' + data)
-                }
-                for (var i = 0; i < risposta.results.length; i++) {
-                    var source = $("#film-ricercati").html();
-                    var template = Handlebars.compile(source);
-                    var context = {
-                        title: risposta.results[i].title,
-                        original_title: risposta.results[i].original_title,
-                        original_language: flag(risposta.results[i].original_language),
-                        vote_average: stelle(risposta.results[i].vote_average),
-                    };
-                    var html = template(context);
-                    $('.container-risultati').append(html);
+                if (risposta.total_results > 0) {
+                    getFilms(risposta.results);
+                } else {
+                    $('.container-risultati').html('Nessun film trovato con ' + data)
                 }
             },
             error: function() {
@@ -73,6 +67,61 @@ function getFilms(data) {
             }
         }
     );
+}
+
+function getFilms(data) {
+    var source = $("#film-ricercati").html();
+    var template = Handlebars.compile(source);
+    for (var i = 0; i < data.length; i++) {
+        var context = {
+            title: data[i].title,
+            original_title: data[i].original_title,
+            original_language: flag(data[i].original_language),
+            vote_average: stelle(data[i].vote_average),
+        };
+        var html = template(context);
+        $('.container-risultati').append(html);
+    }
+}
+
+function searchSeries(data) {
+
+    $.ajax(
+        {
+            url: 'https://api.themoviedb.org/3/search/tv',
+            method: 'GET',
+            data: {
+                api_key: '0f860012106ea3b4f9e200aaaf3e1386',
+                language: 'it-IT',
+                query: data
+            },
+            success: function(risposta) {
+                if (risposta.total_results > 0) {
+                    getSeries(risposta.results);
+                } else {
+                    $('.container-risultati').html('Nessuna serie TV trovata con ' + data)
+                }
+            },
+            error: function() {
+                alert('errore');
+            }
+        }
+    );
+}
+
+function getSeries(data) {
+    var source = $("#film-ricercati").html();
+    var template = Handlebars.compile(source);
+    for (var i = 0; i < data.length; i++) {
+        var context = {
+            original_name: data[i].original_name,
+            original_title: data[i].original_title,
+            original_language: flag(data[i].original_language),
+            vote_average: stelle(data[i].vote_average),
+        };
+        var html = template(context);
+        $('.container-risultati').append(html);
+    }
 }
 
 function flag(lingua) {
