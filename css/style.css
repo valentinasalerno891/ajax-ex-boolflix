@@ -1,9 +1,22 @@
-/* * {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-} */
+}
+
+.ricerca {
+    margin: 20px 0;
+    padding-left: 30px;
+}
+
+ul {
+    margin: 30px;
+}
 
 strong {
     color: red;
+}
+
+.lingua img {
+    width: 23px;
 }

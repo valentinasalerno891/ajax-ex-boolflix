@@ -75,13 +75,14 @@ function getFilms(data) {
     );
 }
 
-function flag(dato) {
-    var italiano = it;
-    var inglese = en;
-    if (true) {
-
+function flag(lingua) {
+    var bandiera = '';
+    if (lingua == 'it' || lingua == 'en') {
+        bandiera = '<img src="img/' + lingua + '.svg"/>';
+    } else {
+        bandiera = lingua;
     }
-
+    return bandiera;
 }
 
 function stelle(num) {
