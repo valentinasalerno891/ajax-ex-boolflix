@@ -56,17 +56,14 @@ function getFilms(data) {
                     $('.container-risultati').html('Nessun risultato trovato con ' + data)
                 }
                 for (var i = 0; i < risposta.results.length; i++) {
-
                     var source = $("#film-ricercati").html();
                     var template = Handlebars.compile(source);
-
                     var context = {
                         title: risposta.results[i].title,
                         original_title: risposta.results[i].original_title,
-                        original_language: risposta.results[i].original_language,
-                        vote_average: risposta.results[i].vote_average,
+                        original_language: flag(risposta.results[i].original_language),
+                        vote_average: stelle(risposta.results[i].vote_average),
                     };
-
                     var html = template(context);
                     $('.container-risultati').append(html);
                 }
@@ -76,4 +73,27 @@ function getFilms(data) {
             }
         }
     );
+}
+
+function flag(dato) {
+    var italiano = it;
+    var inglese = en;
+    if (true) {
+
+    }
+
+}
+
+function stelle(num) {
+    var voto = Math.floor(num/2);
+    var stelline = '';
+    for (var i = 1; i <= 5; i++) {
+        if (i <= voto) {
+            var stellina = '<i class="fas fa-star"></i>';
+        } else {
+            var stellina = '<i class="far fa-star"></i>';
+        }
+        stelline += stellina
+    }
+    return stelline;
 }
