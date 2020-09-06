@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <!-- <script src="https://momentjs.com/downloads/moment.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
     <title>Boolflix</title>
@@ -26,8 +26,10 @@
         <script id="film-ricercati" type="text/x-handlebars-template">
 
             <ul class="film">
-                <li><strong>Titolo: </strong>{{title}} {{original_name}}</li>
+                <img src="https://image.tmdb.org/t/p/w342{{{poster}}}">
+                <li><strong>Titolo: </strong>{{title}}</li>
                 <li><strong>Titolo originale: </strong>{{original_title}}</li>
+                <li><strong>Tipo: </strong>{{tipo}}</li>
                 <li class="lingua"><strong>Lingua originale: </strong>{{{original_language}}}</li>
                 <li><strong>Voto: </strong>{{{vote_average}}}</li>
             </ul>
