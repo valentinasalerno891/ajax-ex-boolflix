@@ -13,34 +13,33 @@
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <div class="menu-sx">
-                <img id="logo" src="https://fontmeme.com/permalink/200908/a09e8a261848ddfde50f4b7f408911a7.png" alt="logo">
-                <ul class="generi">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Film</a></li>
-                    <li><a href="#">Serie Tv</a></li>
-                    <li><a href="#">Nuovi Arrivi</a></li>
-                    <li><a href="#">La mia lista</a></li>
-                </ul>
-            </div>
-            <!-- Sezione ricerca  -->
-            <div class="ricerca">
-                <input id="ricerca-qui" placeholder="Inserisci il titolo">
-                <i id="search" class="fas fa-search"></i>
-            </div>
-        </header>
-
+    <header>
+        <div class="menu-sx">
+            <img id="logo" src="https://fontmeme.com/permalink/200908/a09e8a261848ddfde50f4b7f408911a7.png" alt="logo">
+            <ul class="generi">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Film</a></li>
+                <li><a href="#">Serie Tv</a></li>
+                <li><a href="#">Nuovi Arrivi</a></li>
+                <li><a href="#">La mia lista</a></li>
+            </ul>
+        </div>
+        <!-- Sezione ricerca  -->
+        <div class="ricerca">
+            <input id="ricerca-qui" placeholder="Cerca titolo">
+            <i id="search" class="fas fa-search"></i>
+        </div>
+    </header>
 
 <!-- Sezione risultati -->
+
+    <div class="container">
         <main class="main">
             <h2>Film</h2>
             <div class="section-film"></div>
             <h2>Serie Tv</h2>
             <div class="section-serie-tv"></div>
         </main>
-
 <!-- Template per ricerca con risultati -->
         <script id="film-ricercati" type="text/x-handlebars-template">
             <div class="card-container">
@@ -50,7 +49,7 @@
                     <li><strong>Titolo originale: </strong>{{original_title}}</li>
                     <li><strong>Tipo: </strong>{{tipo}}</li>
                     <li class="lingua"><strong>Lingua originale: </strong>{{{original_language}}}</li>
-                    <li class="stars"><strong>Voto: </strong>{{{vote_average}}}</li>
+                    <li class="star"><strong>Voto: </strong>{{{vote_average}}}</li>
                     <li><strong>Descrizione </strong>{{{overview}}}</li>
                 </ul>
             </div>
@@ -60,8 +59,6 @@
         <script id="film-non-trovati" type="text/x-handlebars-template">
             <div class="poster">{{noResults}}</div>
         </script>
-
-
     </div>
 
 
