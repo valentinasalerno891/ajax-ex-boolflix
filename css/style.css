@@ -80,8 +80,8 @@ a:hover {
 
 /* TEMPLATE */
 .poster {
-  width: 250px;
-  height: 300px;
+  width: 240px;
+  height: 340px;
   margin: 4px;
 }
 
@@ -92,9 +92,33 @@ a:hover {
   flex-wrap: wrap;
 }
 
-.lista li {
+.lista {
     color: white;
-    display: none;
+    display: block;
+}
+
+.card-container {
+    position: relative;
+}
+
+.card-container:hover .overlay {
+    opacity: 0.75;
+}
+
+.overlay {
+    font-size: 16px;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    padding: 20px;
+    list-style: none;
+    line-height: 20px;
 }
 
 .lingua img {

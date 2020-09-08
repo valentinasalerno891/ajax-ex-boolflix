@@ -42,24 +42,23 @@
         </main>
 
 <!-- Template per ricerca con risultati -->
-        <!-- <div class="card-container"> -->
-            <script id="film-ricercati" type="text/x-handlebars-template">
-                <ul class="lista">
-                    <!-- <img class="locandina"> -->
-                    {{{poster}}}
+        <script id="film-ricercati" type="text/x-handlebars-template">
+            <div class="card-container">
+                {{{poster}}}
+                <ul class="lista overlay">
                     <li><strong>Titolo: </strong>{{title}}</li>
                     <li><strong>Titolo originale: </strong>{{original_title}}</li>
                     <li><strong>Tipo: </strong>{{tipo}}</li>
                     <li class="lingua"><strong>Lingua originale: </strong>{{{original_language}}}</li>
-                    <li><strong>Voto: </strong>{{{vote_average}}}</li>
+                    <li class="stars"><strong>Voto: </strong>{{{vote_average}}}</li>
                     <li><strong>Descrizione </strong>{{{overview}}}</li>
                 </ul>
-            </script>
-        <!-- </div> -->
+            </div>
+        </script>
 
 <!-- Template per ricerca senza risultati -->
         <script id="film-non-trovati" type="text/x-handlebars-template">
-          <div class="poster">{{noResults}}</div>
+            <div class="poster">{{noResults}}</div>
         </script>
 
 
