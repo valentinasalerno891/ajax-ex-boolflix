@@ -42,21 +42,24 @@
         </main>
 
 <!-- Template per ricerca con risultati -->
-        <script id="film-ricercati" type="text/x-handlebars-template">
-            <ul class="lista">
-                <img>{{{poster}}}
-                <li><strong>Titolo: </strong>{{title}}</li>
-                <li><strong>Titolo originale: </strong>{{original_title}}</li>
-                <li><strong>Tipo: </strong>{{tipo}}</li>
-                <li class="lingua"><strong>Lingua originale: </strong>{{{original_language}}}</li>
-                <li><strong>Voto: </strong>{{{vote_average}}}</li>
-                <li><strong>Descrizione </strong>{{{overview}}}</li>
-            </ul>
-        </script>
+        <!-- <div class="card-container"> -->
+            <script id="film-ricercati" type="text/x-handlebars-template">
+                <ul class="lista">
+                    <!-- <img class="locandina"> -->
+                    {{{poster}}}
+                    <li><strong>Titolo: </strong>{{title}}</li>
+                    <li><strong>Titolo originale: </strong>{{original_title}}</li>
+                    <li><strong>Tipo: </strong>{{tipo}}</li>
+                    <li class="lingua"><strong>Lingua originale: </strong>{{{original_language}}}</li>
+                    <li><strong>Voto: </strong>{{{vote_average}}}</li>
+                    <li><strong>Descrizione </strong>{{{overview}}}</li>
+                </ul>
+            </script>
+        <!-- </div> -->
 
 <!-- Template per ricerca senza risultati -->
         <script id="film-non-trovati" type="text/x-handlebars-template">
-          <div>{{noResults}}</div>
+          <div class="poster">{{noResults}}</div>
         </script>
 
 

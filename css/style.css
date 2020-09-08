@@ -79,6 +79,23 @@ a:hover {
 }
 
 /* TEMPLATE */
+.poster {
+  width: 250px;
+  height: 300px;
+  margin: 4px;
+}
+
+.section-film,
+.section-serie-tv {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.lista li {
+    color: white;
+    display: none;
+}
 
 .lingua img {
     width: 23px;
