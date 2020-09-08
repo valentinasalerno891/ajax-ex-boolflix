@@ -1,31 +1,15 @@
-// Milestone 3: In questa milestone come prima cosa aggiungiamo la copertina del film o della serie al nostro elenco.
-// Ci viene passata dall’API solo la parte finale dell’URL, questo perché poi potremo generare da quella porzione di URL tante dimensioni diverse.
-// Dovremo prendere quindi l’URL base delle immagini di TMDB:
-// https://image.tmdb.org/t/p/ per poi aggiungere la dimensione che vogliamo generare
-// (troviamo tutte le dimensioni possibili a questo link: https://www.themoviedb.org/talk/53c11d4ec3a3684cf4006400) per poi aggiungere la parte finale dell’URL passata dall’API.
-
 $(document).ready(function(){
 
-    var url1 = 'https://api.themoviedb.org/3/search/movie';
-    var url2 = 'https://api.themoviedb.org/3/search/tv';
-
     $('.button').click(function(){
-
-        var ricerca = $('.ricerca input').val();
-
-        reset();
-        search(ricerca, url1, 'film');
-        search(ricerca, url2, 'serie tv');
+        start();
     });
 
     $('.ricerca input').keydown(function(){
-        var ricerca = $('.ricerca input').val();
         if (event.which == 13 || event.keyCode == 13) {
-            reset();
-            search(ricerca, url1, 'film');
-            search(ricerca, url2, 'serie tv');
+            start();
         }
     })
+
 });
 
 
@@ -33,9 +17,19 @@ $(document).ready(function(){
 
 //******FUNZIONI*******
 
+function start(){
+    var ricerca = $('.ricerca input').val();
+    reset();
+    var url1 = 'https://api.themoviedb.org/3/search/movie';
+    var url2 = 'https://api.themoviedb.org/3/search/tv';
+    search(ricerca, url1, 'film');
+    search(ricerca, url2, 'serie tv');
+}
+
 function reset(dati) {
     $('#ricerca-qui').val('');
-    $('.container-risultati').empty('');
+    $('.film').empty();
+    $('.serie-tv').empty();
 }
 
 function search(data, url, type) {
@@ -53,7 +47,7 @@ function search(data, url, type) {
                 if (risposta.total_results > 0) {
                     getResults(risposta.results, type);
                 } else {
-                    $('.container-risultati').html('Nessun ricerca trovata con ' + data)
+                    noResults(type);
                 }
             },
             error: function() {
@@ -81,12 +75,28 @@ function getResults(data, type) {
             original_title: originale,
             original_language: flag(data[i].original_language),
             vote_average: stelle(data[i].vote_average),
-            poster: data[i].poster_path
+            poster: poster(data[i].poster_path,titolo),
+            overview: data[i].overview.substring(0,200)+' [...]'
         };
         var html = template(context);
-        $('.container-risultati').append(html);
+        if(type == 'film'){
+          $('.section-film').append(html);
+        } else {
+          $('.section-serie-tv').append(html);
+        }
     }
 }
+
+function poster(poster,title){
+  var urlBase = 'https://image.tmdb.org/t/p/w185';
+  var percorso = urlBase + poster; //https://image.tmdb.org/t/p/w185/7lyBcpYB0Qt8gYhXYaEZUNlNQAv.jpg
+  poster_image = '<img src="'+percorso+'" class="poster" alt="'+title+'">';
+  if (poster == null){
+    poster_image = '<img src="img/img-not-av.png" class="poster" alt="'+title+'">';
+  }
+  return poster_image;
+}
+
 
 function flag(lingua) {
     var bandiera = '';
@@ -110,4 +120,36 @@ function stelle(num) {
         stelline += stellina
     }
     return stelline;
+}
+
+// Variante con mezze stelle:
+// function stelle(num){
+//   var resto = num % 2;
+//   num = Math.floor(num/2);
+//   var star = '';
+//   for (var i = 0; i < 5; i++){
+//     if (i < num){
+//       star += '<i class="fas fa-star"></i>';
+//     } else if (resto != 0) {
+//        star += '<i class="fas fa-star-half-alt"></i>';
+//        resto = 0;
+//     } else {
+//       star += '<i class="far fa-star"></i>';
+//     }
+//   }
+//   return star;
+// }
+
+function noResults(type) {
+    var source = $("#film-non-trovati").html();
+    var template = Handlebars.compile(source);
+    var context = {
+      noResults: 'Nessun risultato trovato in ' + type
+    };
+    var html = template(context);
+    if(type == 'film'){
+      $('.section-film').append(html);
+    } else if (type == 'serie tv'){
+      $('.section-serie-tv').append(html);
+    }
 }

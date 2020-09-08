@@ -4,6 +4,17 @@
     box-sizing: border-box;
 }
 
+body {
+    /* background-color: #141414; */
+
+}
+
+h1 {
+    font-family: 'Bebas Neue', cursive;
+    color: #db202c;
+    font-size: 70px;
+
+}
 .ricerca {
     margin: 20px 0;
     padding-left: 30px;

@@ -5,40 +5,56 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <!-- <script src="https://momentjs.com/downloads/moment.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
     <title>Boolflix</title>
 </head>
 <body>
-        <header></header>
 
-        <section class="ricerca">
+    <div class="container">
+        <header>
+            <h1>BOOLFLIX</h1>
+        </header>
+
+<!-- Sezione ricerca  -->
+        <div class="ricerca">
             <input id="ricerca-qui" placeholder="Inserisci il titolo">
             <button type="button" name="button" class="button">Search</button>
-        </section>
-
-        <div class="container-risultati">
-            <ul class="film"></ul>
         </div>
 
+<!-- Sezione risultati -->
+        <h2>Film</h2>
+        <div class="section-film"></div>
+        <h2>Serie Tv</h2>
+        <div class="section-serie-tv"></div>
 
+<!-- Template per ricerca con risultati -->
         <script id="film-ricercati" type="text/x-handlebars-template">
-
-            <ul class="film">
-                <img src="https://image.tmdb.org/t/p/w342{{{poster}}}">
+            <ul class="lista">
+                <img>{{{poster}}}
                 <li><strong>Titolo: </strong>{{title}}</li>
                 <li><strong>Titolo originale: </strong>{{original_title}}</li>
                 <li><strong>Tipo: </strong>{{tipo}}</li>
                 <li class="lingua"><strong>Lingua originale: </strong>{{{original_language}}}</li>
                 <li><strong>Voto: </strong>{{{vote_average}}}</li>
+                <li><strong>Descrizione </strong>{{{overview}}}</li>
             </ul>
-
         </script>
+
+<!-- Template per ricerca senza risultati -->
+        <script id="film-non-trovati" type="text/x-handlebars-template">
+          <div>{{noResults}}</div>
+        </script>
+
+
+    </div>
 
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="js/myscript.js" charset="utf-8"></script>
+
 </body>
 </html>
