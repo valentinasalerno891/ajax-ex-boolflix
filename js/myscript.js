@@ -1,10 +1,10 @@
 $(document).ready(function(){
 
-    $('.button').click(function(){
+    $('#search').click(function(){
         start();
     });
 
-    $('.ricerca input').keydown(function(){
+    $('#ricerca-qui').keydown(function(){
         if (event.which == 13 || event.keyCode == 13) {
             start();
         }
@@ -18,7 +18,7 @@ $(document).ready(function(){
 //******FUNZIONI*******
 
 function start(){
-    var ricerca = $('.ricerca input').val();
+    var ricerca = $('#ricerca-qui').val();
     reset();
     var url1 = 'https://api.themoviedb.org/3/search/movie';
     var url2 = 'https://api.themoviedb.org/3/search/tv';
@@ -88,7 +88,7 @@ function getResults(data, type) {
 }
 
 function poster(poster,title){
-  var urlBase = 'https://image.tmdb.org/t/p/w185';
+  var urlBase = 'https://image.tmdb.org/t/p/w342';
   var percorso = urlBase + poster; //https://image.tmdb.org/t/p/w185/7lyBcpYB0Qt8gYhXYaEZUNlNQAv.jpg
   poster_image = '<img src="'+percorso+'" class="poster" alt="'+title+'">';
   if (poster == null){
@@ -96,7 +96,6 @@ function poster(poster,title){
   }
   return poster_image;
 }
-
 
 function flag(lingua) {
     var bandiera = '';

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- <script src="https://momentjs.com/downloads/moment.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
@@ -15,20 +15,31 @@
 
     <div class="container">
         <header>
-            <h1>BOOLFLIX</h1>
+            <div class="menu-sx">
+                <img id="logo" src="https://fontmeme.com/permalink/200908/a09e8a261848ddfde50f4b7f408911a7.png" alt="logo">
+                <ul class="generi">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Film</a></li>
+                    <li><a href="#">Serie Tv</a></li>
+                    <li><a href="#">Nuovi Arrivi</a></li>
+                    <li><a href="#">La mia lista</a></li>
+                </ul>
+            </div>
+            <!-- Sezione ricerca  -->
+            <div class="ricerca">
+                <input id="ricerca-qui" placeholder="Inserisci il titolo">
+                <i id="search" class="fas fa-search"></i>
+            </div>
         </header>
 
-<!-- Sezione ricerca  -->
-        <div class="ricerca">
-            <input id="ricerca-qui" placeholder="Inserisci il titolo">
-            <button type="button" name="button" class="button">Search</button>
-        </div>
 
 <!-- Sezione risultati -->
-        <h2>Film</h2>
-        <div class="section-film"></div>
-        <h2>Serie Tv</h2>
-        <div class="section-serie-tv"></div>
+        <main class="main">
+            <h2>Film</h2>
+            <div class="section-film"></div>
+            <h2>Serie Tv</h2>
+            <div class="section-serie-tv"></div>
+        </main>
 
 <!-- Template per ricerca con risultati -->
         <script id="film-ricercati" type="text/x-handlebars-template">
