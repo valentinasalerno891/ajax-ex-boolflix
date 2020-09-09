@@ -7,6 +7,7 @@ $(document).ready(function(){
     $('#ricerca-qui').keydown(function(){
         if (event.which == 13 || event.keyCode == 13) {
             start();
+
         }
     })
 
@@ -19,17 +20,17 @@ $(document).ready(function(){
 
 function start(){
     var ricerca = $('#ricerca-qui').val();
-    reset();
     var url1 = 'https://api.themoviedb.org/3/search/movie';
     var url2 = 'https://api.themoviedb.org/3/search/tv';
     search(ricerca, url1, 'film');
     search(ricerca, url2, 'serie tv');
+    reset();
+
 }
 
 function reset(dati) {
     $('#ricerca-qui').val('');
-    $('.film').empty();
-    $('.serie-tv').empty();
+    $('.card-container').empty('');
 }
 
 function search(data, url, type) {
