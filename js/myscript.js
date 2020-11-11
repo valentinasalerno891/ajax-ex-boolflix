@@ -1,5 +1,10 @@
 $(document).ready(function(){
 
+// film e serie trend della settimana
+    trend('movie');
+    trend('tv');
+
+// ricerca
     $('#search').click(function(){
         start();
     });
@@ -7,9 +12,24 @@ $(document).ready(function(){
     $('#ricerca-qui').keydown(function(){
         if (event.which == 13 || event.keyCode == 13) {
             start();
-
+            reset();
         }
     })
+
+// scorrimento trends e risultati ricerca
+
+    $('i.left').click(function(){
+        var nextElement = $(this).siblings('.lista');
+        var currentElement = nextElement.scrollLeft();
+        currentElement -= 200;
+        nextElement.scrollLeft(currentElement);
+    });
+    $('i.right').click(function(){
+        var nextElement = $(this).siblings('.lista');
+        var currentElement = nextElement.scrollLeft();
+        currentElement += 200;
+        nextElement.scrollLeft(currentElement);
+    });
 
 });
 
@@ -18,22 +38,46 @@ $(document).ready(function(){
 
 //******FUNZIONI*******
 
-function start(){
+function trend(tipo){
+    $.ajax(
+        {
+            url: 'https://api.themoviedb.org/3/trending/' + tipo + '/day',
+            method:'GET',
+            data:{
+                api_key:'0f860012106ea3b4f9e200aaaf3e1386',
+                language:'it-IT'
+            },
+            success: function(risposta){
+                getResults(risposta,tipo);
+            },
+            error: function(){
+                alert('Si è verificato un errore');
+            }
+        }
+    )
+}
+
+function start(tipo){
+
     var ricerca = $('#ricerca-qui').val();
-    var url1 = 'https://api.themoviedb.org/3/search/movie';
-    var url2 = 'https://api.themoviedb.org/3/search/tv';
-    search(ricerca, url1, 'film');
-    search(ricerca, url2, 'serie tv');
+
+    var tipo1 = 'movie';
+    var url = 'https://api.themoviedb.org/3/search/' + tipo1;
+    search(ricerca, url, tipo1);
+
+    var tipo2 = 'tv';
+    var url = 'https://api.themoviedb.org/3/search/' + tipo2;
+    search(ricerca, url, tipo2);
+
     reset();
-
 }
 
-function reset(dati) {
+function reset() {
+    $('.lista').empty('');
     $('#ricerca-qui').val('');
-    $('.card-container').empty('');
 }
 
-function search(data, url, type) {
+function search(ricerca, url, tipo) {
 
     $.ajax(
         {
@@ -42,60 +86,68 @@ function search(data, url, type) {
             data: {
                 api_key: '0f860012106ea3b4f9e200aaaf3e1386',
                 language: 'it-IT',
-                query: data
+                query: ricerca,
             },
             success: function(risposta) {
                 if (risposta.total_results > 0) {
-                    getResults(risposta.results, type);
+                    getResults(risposta, tipo);
                 } else {
-                    noResults(type);
+                    noResults(tipo);
                 }
             },
             error: function() {
-                alert('errore');
+                alert('errore nella ricerca');
             }
         }
     );
 }
 
-function getResults(data, type) {
+function getResults(risposta, tipo) {
     var source = $("#film-ricercati").html();
     var template = Handlebars.compile(source);
 
-    for (var i = 0; i < data.length; i++) {
-        if (type == 'film') {
-            var titolo = data[i].title;
-            var originale = data[i].original_title;
-        } else if (type == 'serie tv') {
-            var titolo = data[i].name;
-            var originale = data[i].original_name;
-        }
-        var context = {
-            tipo: type,
-            title: titolo,
-            original_title: originale,
-            original_language: flag(data[i].original_language),
-            vote_average: stelle(data[i].vote_average),
-            poster: poster(data[i].poster_path,titolo),
-            overview: data[i].overview.substring(0,200)+' [...]'
+    for (var i = 0; i < risposta.results.length; i++) {
+
+        var id = risposta.results[i].id;
+        var originalLanguage = risposta.results[i].original_language;
+        var voto = risposta.results[i].vote_average;
+
+        if (tipo == 'movie') {
+            var titolo = risposta.results[i].title;
+            var originalTitle = risposta.results[i].original_title;
+        } else if (tipo == 'tv') {
+            var titolo = risposta.results[i].name;
+            var originalTitle = risposta.results[i].original_name;
         };
-        var html = template(context);
-        if(type == 'film'){
-          $('.section-film').append(html);
-        } else {
-          $('.section-serie-tv').append(html);
+
+        var context = {
+            id: id,
+            tipo: tipo,
+            title: titolo,
+            original_title: originalTitle,
+            original_language: flag(originalLanguage),
+            vote_average: stelle(voto),
+            poster: poster(risposta.results[i].poster_path),
+            overview: risposta.results[i].overview.substring(0,180)+' [...]'
         }
-    }
+
+        var html = template(context);
+        if (tipo == 'movie'){
+          $('.lista.movie').append(html);
+        } else if (tipo == 'tv') {
+          $('.lista.tv').append(html);
+        }
+    };
 }
 
-function poster(poster,title){
-  var urlBase = 'https://image.tmdb.org/t/p/w342';
-  var percorso = urlBase + poster; //https://image.tmdb.org/t/p/w185/7lyBcpYB0Qt8gYhXYaEZUNlNQAv.jpg
-  poster_image = '<img src="'+percorso+'" class="poster" alt="'+title+'">';
-  if (poster == null){
-    poster_image = '<img src="img/img-not-av.png" class="poster" alt="'+title+'">';
-  }
-  return poster_image;
+function poster(poster){
+    if (poster == null){
+        var percorso = 'file:///C:/Users/valen/Desktop/Boolean%20esercizi/ajax-ex-boolflix/img/netflixlogo.0.0.jpg';
+    } else {
+        var urlBase = 'https://image.tmdb.org/t/p/w342/';
+        var percorso = urlBase + poster;
+    }
+    return percorso;
 }
 
 function flag(lingua) {
@@ -140,16 +192,16 @@ function stelle(num) {
 //   return star;
 // }
 
-function noResults(type) {
+function noResults(tipo) {
     var source = $("#film-non-trovati").html();
     var template = Handlebars.compile(source);
     var context = {
-      noResults: 'Nessun risultato trovato in ' + type
+        noResults: 'Nessun risultato trovato in ' + tipo
     };
     var html = template(context);
-    if(type == 'film'){
-      $('.section-film').append(html);
-    } else if (type == 'serie tv'){
-      $('.section-serie-tv').append(html);
+    if (tipo == 'movie'){
+        $('.lista.movie').append(html);
+    } else if (tipo == 'tv') {
+        $('.lista.tv').append(html);
     }
 }

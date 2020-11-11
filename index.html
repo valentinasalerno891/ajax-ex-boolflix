@@ -1,12 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- <script src="https://momentjs.com/downloads/moment.min.js"></script> -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js" integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
     <title>Boolflix</title>
@@ -15,16 +13,15 @@
 
     <header>
         <div class="menu-sx">
-            <img id="logo" src="https://fontmeme.com/permalink/200908/a09e8a261848ddfde50f4b7f408911a7.png" alt="logo">
-            <ul class="generi">
+            <img id="logo" src="img/logo.png" alt="logo">
+            <ul class="voci-menu-sx">
                 <li><a href="#">Home</a></li>
-                <li><a href="#">Film</a></li>
-                <li><a href="#">Serie Tv</a></li>
                 <li><a href="#">Nuovi Arrivi</a></li>
                 <li><a href="#">La mia lista</a></li>
             </ul>
         </div>
-        <!-- Sezione ricerca  -->
+
+<!-- Sezione ricerca  -->
         <div class="ricerca">
             <input id="ricerca-qui" placeholder="Cerca titolo">
             <i id="search" class="fas fa-search"></i>
@@ -32,26 +29,43 @@
     </header>
 
 <!-- Sezione risultati -->
-
-    <div class="container">
         <main class="main">
-            <h2>Film</h2>
-            <div class="section-film"></div>
-            <h2>Serie Tv</h2>
-            <div class="section-serie-tv"></div>
+            <section class="section movie">
+                <h2>Film</h2>
+                <div class="row">
+                    <i class="fas fa-chevron-left left movie"></i>
+                    <div class="lista movie">
+
+                    </div>
+                    <i class="fas fa-chevron-right right movie"></i>
+                </div>
+            </section>
+            <section class="section tv">
+                <h2>Serie Tv</h2>
+                <div class="row">
+                    <i class="fas fa-chevron-left left tv"></i>
+                    <div class="lista tv">
+
+                    </div>
+                    <i class="fas fa-chevron-right right tv"></i>
+                </div>
+            </section>
         </main>
+
 <!-- Template per ricerca con risultati -->
         <script id="film-ricercati" type="text/x-handlebars-template">
-            <div class="card-container">
-                {{{poster}}}
-                <ul class="lista overlay">
-                    <li><strong>Titolo: </strong>{{title}}</li>
-                    <li><strong>Titolo originale: </strong>{{original_title}}</li>
-                    <li><strong>Tipo: </strong>{{tipo}}</li>
-                    <li class="lingua"><strong>Lingua originale: </strong>{{{original_language}}}</li>
-                    <li class="star"><strong>Voto: </strong>{{{vote_average}}}</li>
-                    <li><strong>Descrizione </strong>{{{overview}}}</li>
-                </ul>
+            <div class="card">
+                <div class="card-container" id="{{id}}">
+                    <div class="overlay">
+                        <h4><strong>{{title}}</strong></h4>
+                        <span><em>Titolo originale:</em> {{original_title}} </span>
+                        <span><em>Tipo:</em> {{tipo}} </span>
+                        <span class="lingua"><em>Lingua originale:</em> {{{original_language}}} </li>
+                        <span class="star"><em>Voto:</em> {{{vote_average}}} </span>
+                        <span><em>Descrizione:</em> {{overview}} </span>
+                    </div>
+                    <img class='poster' src="{{{poster}}}" alt="poster di {{title}}"/>
+                </div>
             </div>
         </script>
 
@@ -59,7 +73,6 @@
         <script id="film-non-trovati" type="text/x-handlebars-template">
             <div class="poster">{{noResults}}</div>
         </script>
-    </div>
 
 
 
