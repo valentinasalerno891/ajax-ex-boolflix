@@ -142,7 +142,7 @@ function getResults(risposta, tipo) {
 
 function poster(poster){
     if (poster == null){
-        var percorso = 'file:///C:/Users/valen/Desktop/Boolean%20esercizi/ajax-ex-boolflix/img/netflixlogo.0.0.jpg';
+        var percorso = 'img/not_found.jpg';
     } else {
         var urlBase = 'https://image.tmdb.org/t/p/w342/';
         var percorso = urlBase + poster;
